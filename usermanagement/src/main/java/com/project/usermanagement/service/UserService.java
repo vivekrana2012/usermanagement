@@ -25,18 +25,6 @@ public class UserService {
 
     public User addUser(User user){
 
-        List<String> roleNames = new ArrayList<>();
-
-        Iterator<Role> itr = user.getRoles().iterator();
-
-        while(itr.hasNext()){
-            roleNames.add(itr.next().getName());
-        }
-
-        Set<Role> role = roleRepository.findByNameIn(roleNames);
-
-        user.setRoles(role);
-
         return userRepository.save(user);
     }
 
