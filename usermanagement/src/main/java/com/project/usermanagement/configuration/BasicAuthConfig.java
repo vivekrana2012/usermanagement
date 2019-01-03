@@ -1,6 +1,7 @@
 package com.project.usermanagement.configuration;
 
 import com.project.usermanagement.service.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
@@ -24,20 +26,16 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
 
     public CustomUserDetailsService customUserDetailsService;
 
+    @Autowired
+    public UserDetailsService userDetailsService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-//        auth
-//                .inMemoryAuthentication()
-//                .withUser("user")
-//                .password(passwordEncoder().encode("password"))
-//                .roles("USER");
 
         auth
-            .userDetailsService(new CustomUserDetailsService())
-//                .usersByUsernameQuery("select * from user where username = ?")
-//                .authoritiesByUsernameQuery("select u.email, r.name from user u inner join user_role ur on(u.id=ur.user_id) inner join role r on(ur.role_id=r.id) where u.email= ?")
-            .passwordEncoder(getPasswordEncoder());
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -57,21 +55,6 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);;
-    }
-
-    @Bean
-    protected PasswordEncoder getPasswordEncoder() {
-        return new PasswordEncoder() {
-            @Override
-            public String encode(CharSequence charSequence) {
-                return charSequence.toString();
-            }
-
-            @Override
-            public boolean matches(CharSequence charSequence, String s) {
-                return true;
-            }
-        };
     }
 
     @Bean
