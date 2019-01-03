@@ -4,7 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -36,10 +38,8 @@ public class User {
     private String email;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    Set<Role> roles = new HashSet<>();
+    @JoinTable(name = "user_role")
+    List<Role> roles = new ArrayList<>();
 
     public String getEmail() {
         return email;
@@ -73,11 +73,11 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 }

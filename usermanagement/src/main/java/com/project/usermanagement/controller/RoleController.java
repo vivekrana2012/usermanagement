@@ -2,7 +2,13 @@ package com.project.usermanagement.controller;
 
 import com.project.usermanagement.model.Role;
 import com.project.usermanagement.service.RoleService;
+
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +38,23 @@ public class RoleController {
         System.out.println("Role Added!");
 
         return true;
+    }
+
+    @GetMapping("/get/{id}")
+    public Role getRoleById(@PathVariable("id") long id){
+
+        Optional<Role> role = roleService.findRoleById(id);
+
+        if(role.isPresent()){
+            return role.get();
+        }
+
+        return new Role();
+    }
+
+    @GetMapping("/get/all")
+    public List<Role> getAllRoles(){
+        return roleService.getAllRoles();
     }
 
 }
