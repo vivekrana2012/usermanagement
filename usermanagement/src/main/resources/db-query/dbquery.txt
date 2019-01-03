@@ -1,0 +1,5 @@
+insert into role(name) values("DEFAULT"); 
+
+insert into user(username, password, email) values("vivek", "$2a$10$E9bLT641u9gTu9Tr8o8jUO9gXgKvKPP16iGVcmZf5HEeEWy/NDfmG", "vivek@default.com");
+
+insert into user_role(user_id, role_id) values(1, 1);   

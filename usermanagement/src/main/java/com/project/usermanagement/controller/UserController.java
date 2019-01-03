@@ -37,11 +37,24 @@ public class UserController {
         return ResponseEntity.ok(new UserResponseEntity("Success", HttpStatus.OK));
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/get/id/{id}")
     public ResponseEntity getUserById(@PathVariable("id") long id){
         System.out.println("trying to find the user.");
 
         Optional<User> user = userService.findById(id);
+
+        if(user.isPresent()){
+            return ResponseEntity.ok(user.get());
+        }
+
+        return ResponseEntity.badRequest().body(new UserResponseEntity("User does not exists.", HttpStatus.BAD_REQUEST));
+    }
+
+    @GetMapping("/get/email/{emailId}")
+    public ResponseEntity getUserById(@PathVariable("emailId") String emailId){
+        System.out.println("trying to find the user.");
+
+        Optional<User> user = userService.findByEmailId(emailId);
 
         if(user.isPresent()){
             return ResponseEntity.ok(user.get());

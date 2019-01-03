@@ -10,6 +10,14 @@ import java.util.Set;
 @Entity
 public class User {
 
+    public User(){}
+
+    public User(User user){
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

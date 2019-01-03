@@ -40,4 +40,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public Optional<User> findByEmailId(String emailId) {
+        return userRepository.findByEmail(emailId);
+    }
 }
