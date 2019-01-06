@@ -26,6 +26,9 @@ public class OAuth2Config extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.inMemoryAuthentication()
+                .withUser("vivek")
+                .password("{noop}vivek")
+                .authorities("DEFAULT");
     }
 }
