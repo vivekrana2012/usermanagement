@@ -24,7 +24,6 @@ public class RoleService {
     }
 
     public Optional<Role> findRoleById(long id){
-
         return roleRepository.findById(id);
     }
 

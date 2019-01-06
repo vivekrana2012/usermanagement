@@ -6,6 +6,7 @@ import com.project.usermanagement.service.RoleService;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,15 +42,15 @@ public class RoleController {
     }
 
     @GetMapping("/get/{id}")
-    public Role getRoleById(@PathVariable("id") long id){
+    public ResponseEntity getRoleById(@PathVariable("id") long id){
 
         Optional<Role> role = roleService.findRoleById(id);
 
         if(role.isPresent()){
-            return role.get();
+            return ResponseEntity.ok(role.get());
         }
 
-        return new Role();
+        return ResponseEntity.badRequest().body(new Role());
     }
 
     @GetMapping("/get/all")

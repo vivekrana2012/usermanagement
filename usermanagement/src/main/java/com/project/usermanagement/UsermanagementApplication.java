@@ -10,8 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class UsermanagementApplication {
 
 	public static void main(String[] args) {
-		String cryptedPassword = new BCryptPasswordEncoder().encode("vivek");
-		System.out.println(cryptedPassword);
 		SpringApplication.run(UsermanagementApplication.class, args);
 	}
 }

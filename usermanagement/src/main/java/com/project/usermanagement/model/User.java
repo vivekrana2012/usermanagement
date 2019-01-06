@@ -18,6 +18,7 @@ public class User {
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.password = user.getPassword();
+        this.roles = user.getRoles();
     }
 
     @Id
@@ -37,7 +38,7 @@ public class User {
     @NotBlank
     private String email;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name ="role_id"))

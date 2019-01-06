@@ -24,17 +24,15 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
 
-    public CustomUserDetailsService customUserDetailsService;
-
     @Autowired
-    public UserDetailsService userDetailsService;
+    public CustomUserDetailsService customUserDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
 
         auth
-                .userDetailsService(userDetailsService)
+                .userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
 
@@ -50,8 +48,9 @@ public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/api/v1/user/**").hasAuthority("DEFAULT")
+                .antMatchers("/api/v1/role/**").hasAuthority("ADMIN")
+                .anyRequest().authenticated()
                 .and()
                 .httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);;
