@@ -19,9 +19,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-@Configuration
-@EnableWebSecurity
 public class BasicAuthConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
